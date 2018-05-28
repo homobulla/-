@@ -27,7 +27,7 @@ index_widgets:
 archive_type: 'monthly'
 show_count: false
 
-# Miscellaneous
+# Miscellaneous test
 google_analytics:
 gauges_analytics:
 favicon: /favicon.png
