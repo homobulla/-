@@ -1,3 +1,10 @@
+---
+title: js单线程
+tags: [js]
+categories: js
+
+---
+
 事件循环的出现是因为javascript单线程的缘故。
 
 js为什么被设计成单线程呢？
