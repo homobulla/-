@@ -11,6 +11,17 @@ author: homobulla
 language: zh-Hans
 timezone: Asia/Changsha
 
+
+
+
+# Social links
+social:
+  GitHub: https://github.com/homobulla
+  微博: https://weibo.com/u/2769741021
+  网易云: http://music.163.com/#/user/home?id=416095533
+
+
+
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://yoursite.com
@@ -50,7 +61,7 @@ highlight:
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
   path: ''
-  per_page: 10
+  per_page: 7
   order_by: -date
   
 # Category & Tag
