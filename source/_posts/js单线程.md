@@ -1,6 +1,6 @@
 ---
 title: js单线程
-date: 2018-05-30
+date: 2018-05-30 20:01:02
 tags: [js]
 categories: js
 
@@ -38,19 +38,13 @@ Event Loop 会无限循环执行上面3步，这就是Event Loop的主要控制�
 ```js
 
 setTimeout(function(){
-
-console.log('setTimeout');
-
+    console.log('setTimeout');
 })
 
 newPromise(function(resolve){
-
-console.log('promise');
-
+    console.log('promise');
 }).then(function(){
-
-console.log('then');
-
+    console.log('then');
 })
 
 console.log('console');

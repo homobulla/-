@@ -9,7 +9,7 @@ description: '我与我周旋久，宁做我。'
 keywords: 'blog、博客、个人网站'
 author: homobulla
 language: zh-Hans
-timezone: Asia/Changsha
+timezone: Asia/Shanghai
 
 
 
@@ -67,7 +67,7 @@ tag_map:
 ## Hexo uses Moment.js to parse and display date
 ## You can customize the date format as defined in
 ## http://momentjs.com/docs/#/displaying/format/
-date_format: YYYY-MM-DD
+date_format: YYYY-MM-DD HH:mm:ss
 time_format: HH:mm:ss
 
 # Pagination
