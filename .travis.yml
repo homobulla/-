@@ -9,7 +9,7 @@ cache:
 # S: Build Lifecycle
 
 before_install:
-  git clone <https://github.com/homobulla/homo> themes/<theme>
+  git clone https://github.com/homobulla/homo themes/<theme>
 
 install:
   - npm install
