@@ -9,3 +9,5 @@ hexo d -g
 
 ### 提交注释
 hexo deploy --message "you message"
+
+### 自动化部署
