@@ -1,6 +1,6 @@
 ---
 title: js的继承
-date: 2018-05-30 20:01:02
+date: 2018-06-06 21:12:02
 tags: [js]
 categories: js
 ---
@@ -34,6 +34,9 @@ function Son() {
     this.age = 12;
 }
 ```
+
+<!--more-->
+
 
  ### 2. 借用构造函数 
 
