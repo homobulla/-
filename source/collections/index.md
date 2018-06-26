@@ -1,6 +1,6 @@
 ---
 
-title:
+title: 收集
 date: 2016-08-13 18:06:03
 comments: false
 type: "picture"
