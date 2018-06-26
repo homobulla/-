@@ -13,8 +13,9 @@ type: "picture"
 <br>
 
 
-### 一些好的资料会放在这里
+### 机器学习与python
 
+- [TensorFlow™](http://www.tensorfly.cn/) 是一个采用数据流图（data flow graphs），用于数值计算的开源软件库。
 
 
 
