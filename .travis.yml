@@ -20,7 +20,6 @@ install:
 script:
   - hexo clean
   - hexo generate
-  - hexo d
 
 after_script:
   - cd ./public
