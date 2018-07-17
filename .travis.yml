@@ -5,7 +5,7 @@ node_js: stable
 
 cache:
   directories:
-    - node_modules
+  
 # S: Build Lifecycle
 
 before_install:
@@ -20,6 +20,7 @@ install:
 script:
   - hexo clean
   - hexo generate
+  - hexo d
 
 after_script:
   - cd ./public
