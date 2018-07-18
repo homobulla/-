@@ -1,5 +1,6 @@
 ---
 title: 深浅拷贝
+date: 2018-07-18 17:20:45
 tags: [js]
 categories: js
 
@@ -93,6 +94,17 @@ console.log(obj2); //  { arr: [ 1, 2, 3, { a: '111', b: '2222' }, 45 ], c: '3333
 - 无法复制函数
 - 无法复制 undefined
 - 无法解决循环引用
+
+在es2017里，有`Object.getOwnPropertyDescriptors`和`Object.assign`进行拷贝。
+但是：
+ `Object.assign()`拷贝的是属性值。假如源对象的属性值是一个指向对象的引用，它也只拷贝那个引用值。且继承属性和不可枚举属性是不能拷贝的。
+ ```js
+   let obj1 = { a: 0 , b: { c: 0}};
+  let obj2 = Object.assign({}, obj1);
+   obj2.b.c = 3;
+  console.log(JSON.stringify(obj1)); // { a: 1, b: { c: 3}}
+  console.log(JSON.stringify(obj2)); // { a: 2, b: { c: 3}}
+```
 
 #### 一些第三方库的实现
 
