@@ -1,6 +1,6 @@
 ---
 title:  关于es6中的遍历器
-data: 2018-07-17 19:33:05
+date: 2018-07-17 19:33:05
 tags: [js]
 categories: js
 
