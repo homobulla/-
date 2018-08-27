@@ -24,3 +24,6 @@ type: "picture"
 
 ### 数据结构与算法
 - [数据结构和算法动态可视化](https://visualgo.net/zh)
+
+### 前端相关
+- [TypeScript Deep Dive 中文翻译版](https://jkchao.github.io/typescript-book-chinese/)
