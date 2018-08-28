@@ -21,7 +21,7 @@ type: "picture"
 ### 一些文章
 
 - [怎样理顺react，flux，redux这些概念的关系，开发中有必要使用它们吗?](https://www.zhihu.com/question/47686258) 
-
+- [H5唤起APP指南(附开源唤端库)](https://juejin.im/post/5b7efb2ee51d45388b6af96c?utm_source=gold_browser_extension)
 ### 数据结构与算法
 - [数据结构和算法动态可视化](https://visualgo.net/zh)
 
