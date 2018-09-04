@@ -22,9 +22,7 @@ categories: python
 
 ### number and string
 
-#### number 计算 大致类似于 js
-
-#### 一些不同之处
+#### number 
 
 有 floast 和 int 类型
 除了 int 和 float，Python 还支持其它数字类型，例如 Decimal 和 Fraction。Python 还内建支持 复数 ，使用后缀 j 或 J 表示虚数部分（例如，3+5j）。
@@ -37,7 +35,7 @@ categories: python
 8 % 5 # 3 % 求摸操作符 ,返回类型同上
 # 整数和浮点数的混合计算中，整数会被转换为浮点数
 ```
-
+<!--more-->
 #### string
 
 单双引号，字符转义`\`,如果你前面带有 \ 的字符被当作特殊字符，你可以使用 原始字符串，方法是在第一个引号前面加上一个 r:
