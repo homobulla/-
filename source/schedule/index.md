@@ -23,6 +23,11 @@ comments: false
 准备学一门后端语言，初步确定是`python`.
 {% endnote%}
 
+{% note%}
+**`2018年09月6日17:30`**
+一个月三个知乎回答.
+{% endnote%}
+
 
 
 
