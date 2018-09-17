@@ -28,3 +28,4 @@ type: "picture"
 
 ### 前端相关
 - [TypeScript Deep Dive 中文翻译版](https://jkchao.github.io/typescript-book-chinese/)
+- [查阅api的浏览器兼容性](https://caniuse.com)
