@@ -13,5 +13,3 @@ hexo deploy --message "you message"
 ### 自动化部署
 
 ### 新增字数统计流量统计
-
-下周把评论功能加上
