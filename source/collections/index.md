@@ -30,3 +30,6 @@ type: "picture"
 - [TypeScript Deep Dive 中文翻译版](https://jkchao.github.io/typescript-book-chinese/)
 - [查阅api的浏览器兼容性](https://caniuse.com)
 - [一键生成前端项目](https://webpack.jakoblind.no)
+
+### 个人博客网站
+- [Jerry Qu专注 WEB 端开发](https://imququ.com/)
