@@ -29,6 +29,7 @@ app.listen(3000, () => {
     console.log('[demo] request post is starting at port 3000')
 })
 ```
+<!--more-->
 
 `koa-bodyparser`是一个**middleware**，`Koa`应用程序是一个包含一组中间件函数的对象，它是按照类似堆栈的方式组织和执行的。
 
