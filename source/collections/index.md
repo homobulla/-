@@ -12,6 +12,7 @@ type: "picture"
 
 <br>
 
+## 收集一些网址，个人收藏夹。
 
 ### 机器学习与python
 
