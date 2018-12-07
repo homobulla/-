@@ -35,3 +35,6 @@ type: "picture"
 
 ### 个人博客网站
 - [Jerry Qu专注 WEB 端开发](https://imququ.com/)
+
+### 其他
+- [如何花最少的钱使用google](http://www.ggfwzs.com/)
