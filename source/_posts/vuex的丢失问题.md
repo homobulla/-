@@ -1,6 +1,6 @@
 ---
 title: vuex丢失问题
-date: 2019-02-19 
+date: 2019-02-19 09:41：23
 tags: [vue]
 categories: vue
 
