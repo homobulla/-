@@ -1,10 +1,10 @@
 ---
-data: 2019/02/19
-title: vuex的丢失
+title: vuex丢失问题
+date: 2019-02-19 
 tags: [vue]
-categories:vue
----
+categories: vue
 
+---
 在使用`vuex`时遇到的一个问题是一旦页面刷新，存在`vuex`的数据全部丢失。即刷新页面以前的内存就被释放了，脚本重新加载，变量重新赋值。
 
 如何解决这个问题？
