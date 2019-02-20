@@ -32,6 +32,7 @@ type: "picture"
 - [查阅api的浏览器兼容性](https://caniuse.com)
 - [一键生成前端项目](https://webpack.jakoblind.no)
 - [前端网](https://www.qdfuns.com/)
+- [正则可视化](https://regexper.com/)
 
 ### 个人博客网站
 - [Jerry Qu专注 WEB 端开发](https://imququ.com/)
