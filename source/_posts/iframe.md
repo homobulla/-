@@ -23,6 +23,16 @@ app引用h5页面很简单，一个`webView`即可。而在微信端的话，我
         style="width:100vw!important;height:auto!important;"
       ></iframe>
 
+#iframe {
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+  min-width: 100%;
+  width: 100%;
+  width: 1px;
+  -webkit-overflow-scrolling: touch;
+  overflow: auto;
+}
+
 ```
 
 首先在`created`期间判断设备类型：
