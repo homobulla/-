@@ -4,7 +4,7 @@ title: iframe的使用
 tag: js
 ---
 
-[iframe](https://juejin.im/entry/589d8c532f301e0069bfa595)
+
 
 关于`iframe`最常听到的是“安全性问题”、“性能问题”，而我在之前也很少使用`iframe`,虽说其功能很强大。
 
