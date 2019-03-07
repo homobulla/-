@@ -11,7 +11,7 @@ categories: vue
 
 <!--more-->
 
-首先来说已经有很好的第三方插件帮我们做到`vuex`持久化，譬如[vuex-persistedstate](https://github.com/robinvdvleuten/vuex-persistedstate)
+目前已经有很好的第三方插件帮我们做到`vuex`持久化，譬如[vuex-persistedstate](https://github.com/robinvdvleuten/vuex-persistedstate)
 
 当然我在项目中并没有采取第三方插件，而是采用了`localStorage`这个方案。
 
