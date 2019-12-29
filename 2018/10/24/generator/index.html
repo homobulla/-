@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="js," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="异步中的generator和async generator内部多种状态。执行generator函数会返回一个遍历器。不仅是状态机，还是遍历器生成函数，我们可以遍历每一个状态。于是又称之为生成器。  async函数的实现原理，就是将generator函数和自动执行器，包装在一个函数里。  如何理解这句话，内部代码如何实现？是这篇文章的重点。 遍历器的next首先，generator函数会返回一个指向">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="generator和async">
+<meta property="og:url" content="http://homobulla.site/2018/10/24/generator/index.html">
+<meta property="og:site_name" content="自留地">
+<meta property="og:description" content="异步中的generator和async generator内部多种状态。执行generator函数会返回一个遍历器。不仅是状态机，还是遍历器生成函数，我们可以遍历每一个状态。于是又称之为生成器。  async函数的实现原理，就是将generator函数和自动执行器，包装在一个函数里。  如何理解这句话，内部代码如何实现？是这篇文章的重点。 遍历器的next首先，generator函数会返回一个指向">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-12-29T08:55:31.907Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="generator和async">
+<meta name="twitter:description" content="异步中的generator和async generator内部多种状态。执行generator函数会返回一个遍历器。不仅是状态机，还是遍历器生成函数，我们可以遍历每一个状态。于是又称之为生成器。  async函数的实现原理，就是将generator函数和自动执行器，包装在一个函数里。  如何理解这句话，内部代码如何实现？是这篇文章的重点。 遍历器的next首先，generator函数会返回一个指向">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://homobulla.site/2018/10/24/generator/"/>
+
+
+
+
+
+  <title>generator和async | 自留地</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/homobulla"><img style="position: absolute; top: 0; left: 0; border: 0;" src="/img/github.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">自留地</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">很开心你能来</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-collections">
+          <a href="/collections/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            collections
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://homobulla.site/2018/10/24/generator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="homobulla">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/homo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="自留地">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">generator和async</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-24T07:15:02+00:00">
+                2018-10-24 15:15:02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js/" itemprop="url" rel="index">
+                    <span itemprop="name">js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>异步中的<code>generator</code>和<code>async</code></p>
+<p><code>generator</code>内部多种状态。执行<code>generator</code>函数会返回一个遍历器。不仅是状态机，还是遍历器生成函数，我们可以遍历每一个状态。于是又称之为<strong>生成器</strong>。</p>
+<blockquote>
+<p><code>async</code>函数的实现原理，就是将<code>generator</code>函数和自动执行器，包装在一个函数里。</p>
+</blockquote>
+<p>如何理解这句话，内部代码如何实现？是这篇文章的重点。</p>
+<h4 id="遍历器的next"><a href="#遍历器的next" class="headerlink" title="遍历器的next"></a>遍历器的next</h4><p>首先，<code>generator</code>函数会返回一个指向内部状态的指针对象，我们必须调用遍历器的<code>next</code>方法才能走到<code>generator</code>函数内部的下一个状态。</p>
+<p>于是，我们需要看一下<code>next</code>方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Iterator = <span class="function"><span class="params">arr</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> nextIndex = <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> nextIndex &lt; arr.length</span><br><span class="line">                ? &#123; <span class="attr">value</span>: arr[nextIndex++] &#125;</span><br><span class="line">                : &#123; <span class="attr">done</span>: <span class="literal">true</span> &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> demo = Iterator([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">demo.next()</span><br></pre></td></tr></table></figure>
+<h4 id="yield-与"><a href="#yield-与" class="headerlink" title="yield 与 *"></a>yield 与 *</h4><p>回到<code>generator</code>本身，前面已经讲<code>generator</code>函数的调用并不会执行，而是必须用遍历器对象的<code>next</code>方法。即每次调用<code>next</code>,内部指针就从接着从上次停下的地方继续执行，直到遇到<code>yield</code>语句。</p>
+<p>即<code>generator</code>本身生成了遍历器，所以它的执行是分阶段用<code>next</code>不断触发的。<code>yield</code>表达式是暂停执行标记，<code>next</code>则是继续执行。</p>
+<p>我们可以在<code>generator</code>函数内很容易控制语句的执行与暂停，每一次的<code>yield</code>表达式都会返回相应的<code>value</code>,基于此我们可以将异步执行放在<code>yield</code>中，暂停指针，当返回<code>value</code>即有结果时，将<code>value</code>抛出再用<code>next</code>继续下一步。</p>
+<a id="more"></a>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">Ge</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">yield</span> <span class="string">'homo'</span>;</span><br><span class="line">    <span class="keyword">yield</span> <span class="string">'bulla'</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'very Handsome'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> myself = Ge();</span><br><span class="line">myself.next() <span class="comment">// homo</span></span><br><span class="line">myself.next() <span class="comment">// bulla</span></span><br><span class="line">myself.next() <span class="comment">// very Handsome</span></span><br></pre></td></tr></table></figure>
+<p>上面的<code>Ge</code>函数通过调用<code>next</code>三次结束。返回一个<code>{value: &quot;very Handsome&quot;, done: true}</code>，包含<code>value</code>和<code>done</code>属性的对象。<code>value</code>代表当前指针，<code>done</code>则表示遍历是否结束。</p>
+<p>需要注意的是，<code>yield</code>是一个<code>惰性求值</code>语句，只有调用<code>next</code>时，才会执行其后面的语句。</p>
+<p><code>yield</code>表达式本身<strong>没有返回值</strong><code>undefined</code>,<code>next</code>方法可以带一个参数，该参数就<strong>被当作上一个<code>yield</code>的返回值</strong>。这给我们提供了控制<code>generator</code>函数内部执行的一个接口。</p>
+<p>也就是说，<strong><code>generator</code>函数从暂停状态到恢复运行。它的上下文状态是不变的</strong>。</p>
+<h4 id="async"><a href="#async" class="headerlink" title="async"></a>async</h4><p>接下来是<code>async</code>,首先它和<code>Generator</code>是不同的。<code>async</code>会返回一个<code>promise</code>对象，在一些复杂的异步场景，<code>promise</code>的<code>all</code>和<code>race</code>会得心应手。而<code>Generator</code>只是一个生成器。</p>
+<p>我们来看一下<code>Generator</code>和<code>async</code>的使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用 generator</span></span><br><span class="line"><span class="keyword">var</span> fetch = <span class="built_in">require</span>(<span class="string">'node-fetch'</span>);</span><br><span class="line"><span class="keyword">var</span> co = <span class="built_in">require</span>(<span class="string">'co'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">gen</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> r1 = <span class="keyword">yield</span> 		                      			fetch(<span class="string">'https://api.github.com/users/github'</span>);</span><br><span class="line">    <span class="keyword">var</span> json1 = <span class="keyword">yield</span> r1.json();</span><br><span class="line">    <span class="built_in">console</span>.log(json1.bio);</span><br><span class="line">&#125;</span><br><span class="line">co(gen);</span><br><span class="line"><span class="comment">// 使用 async</span></span><br><span class="line"><span class="keyword">var</span> fetch = <span class="built_in">require</span>(<span class="string">'node-fetch'</span>);</span><br><span class="line"><span class="keyword">var</span> fetchData = <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> r1 = <span class="keyword">await</span> 					   		  			fetch(<span class="string">'https://api.github.com/users/github'</span>);</span><br><span class="line">    <span class="keyword">var</span> json1 = <span class="keyword">await</span> r1.json();</span><br><span class="line">    <span class="built_in">console</span>.log(json1.bio);</span><br><span class="line">&#125;;</span><br><span class="line">fetchData();</span><br></pre></td></tr></table></figure>
+<p><code>async</code>函数就是将 Generator 函数的星号（<code>*</code>）替换成<code>async</code>，将<code>yield</code>替换成<code>await</code>,并内置执行器。</p>
+<p>进一步说，<code>async</code>函数完全可以看作多个异步操作，包装成的一个 Promise 对象，而<code>await</code>命令就是内部<code>then</code>命令的语法糖。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"><i class="fa fa-tag"></i>js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/17/vue之响应系统/" rel="next" title="vue之响应系统">
+                <i class="fa fa-chevron-left"></i> vue之响应系统
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/26/面向对象编程1/" rel="prev" title="面向对象编程（一）">
+                面向对象编程（一） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/homo.jpg"
+                alt="homobulla" />
+            
+              <p class="site-author-name" itemprop="name" style="color:#5290f5;">homobulla</p>
+              <p class="site-description motion-element" itemprop="description">我与我周旋久，宁做我。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/homobulla" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#遍历器的next"><span class="nav-number">1.</span> <span class="nav-text">遍历器的next</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#yield-与"><span class="nav-number">2.</span> <span class="nav-text">yield 与 *</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#async"><span class="nav-number">3.</span> <span class="nav-text">async</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+<div class="copyright">
+<span><a href="http://www.beian.miit.gov.cn">京ICP备19045349号-1<a/></span>
+&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">homobulla</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">19.4k</span>
+   
+  
+</div>
+
+
+        
+<div class="busuanzi-count">
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

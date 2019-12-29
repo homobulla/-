@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据结构与算法," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="数据结构与算法（一） 算法是指基于特定的算法模型，旨在解决某一信息处理问题而设计的一个指令序列。  算法应具备几个要素： 输入与输出：对所求问题特定实例的描述称为输入(input),经计算和处理之后得到的信息，即针对输入问题实例的答案，称为输出(output)。在物理上，输出有可能存放于单独的空间，也可能直接存放在原输入所占的存储空间。 基本操作、确定性与可行性：所谓的确定性和可行性是说算法应可描">
+<meta name="keywords" content="数据结构与算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法(一)">
+<meta property="og:url" content="http://homobulla.site/2018/08/14/数据结构与算法1/index.html">
+<meta property="og:site_name" content="自留地">
+<meta property="og:description" content="数据结构与算法（一） 算法是指基于特定的算法模型，旨在解决某一信息处理问题而设计的一个指令序列。  算法应具备几个要素： 输入与输出：对所求问题特定实例的描述称为输入(input),经计算和处理之后得到的信息，即针对输入问题实例的答案，称为输出(output)。在物理上，输出有可能存放于单独的空间，也可能直接存放在原输入所占的存储空间。 基本操作、确定性与可行性：所谓的确定性和可行性是说算法应可描">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-12-29T08:55:31.911Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构与算法(一)">
+<meta name="twitter:description" content="数据结构与算法（一） 算法是指基于特定的算法模型，旨在解决某一信息处理问题而设计的一个指令序列。  算法应具备几个要素： 输入与输出：对所求问题特定实例的描述称为输入(input),经计算和处理之后得到的信息，即针对输入问题实例的答案，称为输出(output)。在物理上，输出有可能存放于单独的空间，也可能直接存放在原输入所占的存储空间。 基本操作、确定性与可行性：所谓的确定性和可行性是说算法应可描">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://homobulla.site/2018/08/14/数据结构与算法1/"/>
+
+
+
+
+
+  <title>数据结构与算法(一) | 自留地</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/homobulla"><img style="position: absolute; top: 0; left: 0; border: 0;" src="/img/github.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">自留地</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">很开心你能来</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-collections">
+          <a href="/collections/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            collections
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://homobulla.site/2018/08/14/数据结构与算法1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="homobulla">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/homo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="自留地">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据结构与算法(一)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-14T15:17:20+00:00">
+                2018-08-14 23:17:20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构与算法/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="数据结构与算法（一）"><a href="#数据结构与算法（一）" class="headerlink" title="数据结构与算法（一）"></a>数据结构与算法（一）</h3><blockquote>
+<p>算法是指基于特定的算法模型，旨在解决某一信息处理问题而设计的一个指令序列。</p>
+</blockquote>
+<h4 id="算法应具备几个要素："><a href="#算法应具备几个要素：" class="headerlink" title="算法应具备几个要素："></a>算法应具备几个要素：</h4><ul>
+<li>输入与输出：对所求问题特定实例的描述称为输入<code>(input)</code>,经计算和处理之后得到的信息，即针对输入问题实例的答案，称为输出<code>(output)</code>。在物理上，输出有可能存放于单独的空间，也可能直接存放在原输入所占的存储空间。</li>
+<li>基本操作、确定性与可行性：所谓的确定性和可行性是说算法应可描述为由若干条语义明确的基本操作组成的指令序列，且每一基本操作在对应的计算模型中均可实现。</li>
+<li>有穷性与正确性： 有穷性(finiteness)是指算法应在执行有限次操作后给出输出。进一步讲，算法不仅会停止，而且输出应符合由问题本身在事先确定的条件，即正确性。</li>
+<li>退化与鲁棒性： 指的是算法的健壮程度，即需要处理各种极端的输入实例，这种极端情况就是退化。而鲁棒性就是能充分的应对此类情况。</li>
+<li>重用性： 即算法的框架能否便捷的推广到其他场合，多适用性。</li>
+</ul>
+<h4 id="算法效率"><a href="#算法效率" class="headerlink" title="算法效率"></a>算法效率</h4><p>当我们在谈论一个算法时，如何评价这是一个好算法还是一般的算法。<br><a id="more"></a></p>
+<ol>
+<li>可计算性<br>可计算性是指当编写的代码没有语法错误能顺利编译的情况下，在执行过程中却会出现栈溢出或者无限递归的问题，更甚者，有些应用问题就无法设计出终止的算法。</li>
+<li>难解性与计算效率<br>算法对任何输入都能在有穷次操作后输出，然而我们必须要关注的是这其中需要的时间，并需要尽量压缩时间和空间成本。</li>
+<li>数据结构<br>无论是算法的输入、输出还是中间计算过程，在计算机中都始终以数据的形式而存在。对于数据的存储、组织、转移等操作，不同的计算模型和平台环境所支持的具体形式不尽相同，其执行效率直接影响算法的效率。这就是数据结构的意义所在。</li>
+</ol>
+<h4 id="复杂度度量"><a href="#复杂度度量" class="headerlink" title="复杂度度量"></a>复杂度度量</h4><h5 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h5><p>首先必须明白的是，运行时间由多种因素综合作用而决定。在诸多因素里问题<b>实例的规模</b>往往是决定计算成本的主要因素。一般地，问题规模越大，所需时间越多。<br>随着输入规模的扩大，算法的执行时间将如何增长？<br><b>执行时间的这一变化趋势可表示为输入规模的一个函数，称作该算法的时间复杂度(time complexity).具体地，特定算法处理规模为n的问题所需的时间记为$T(n)$.</b>从保守估计的角度出发，在规模为n的所有输入中执行时间最长者为$T(n)$,以$T(n)$来度量该算法的时间复杂度。</p>
+<h5 id="渐进复杂度"><a href="#渐进复杂度" class="headerlink" title="渐进复杂度"></a>渐进复杂度</h5><p>至此，比较同一问题的两个算法A和B，通过比较其时间复杂度$T_A(n)$和$T_B(n)$，即可评价二者对于同一规模n的计算效率高低。然而有些算法更适用于小规模的输入，在这种情况下，时间成本就不是一个值得计较的东西，我们可以忽略其处理小规模问题的能力差异，转而关注其在更大规模问题上的表现。</p>
+<h4 id="大O记号"><a href="#大O记号" class="headerlink" title="大O记号"></a>大O记号</h4><p>探讨T(n)的渐进上界，我们需引入”大O记号”。具体的，若存在正常数c和函数f(n),对于任何n &gt;&gt;2 都有<br><br>$T(n) ≤ c*f(n)$<br><br>则n足够大之后，f(n)给出T(n)增长速度的一个上界，此时记：<br><br>$T(n) = O(fn(n))$<br><br>由此得出大O记号的一下性质：<br></p>
+<ol>
+<li>对于任意常数c&gt;0,有<br><br>$ O(f(n)) = O(c*f(n))$<br></li>
+<li>对于任意常数a&gt;b&gt;0,有<br><br>$O(n^a + n^b) = O(n^a)$<br></li>
+</ol>
+<h4 id="环境差异、基本操作"><a href="#环境差异、基本操作" class="headerlink" title="环境差异、基本操作"></a>环境差异、基本操作</h4><p>在实际环境中测出的$T(n)$，无法完全准确的衡量一个算法。不同的硬件平台不同操作系统都会影响时间。我们需要一种客观的超脱于具体硬件平台和系统等因素的标准来衡量。<br>当把时间复杂度理解为算法中各条指令的执行时间之和时，不妨将$T(n)$定义为算法所执行基本操作的总次数。即$T(n)$决定于组成算法的所有语句各自的执行次数以及所含基本操作的数目。</p>
+<h4 id="最好最坏平均情况"><a href="#最好最坏平均情况" class="headerlink" title="最好最坏平均情况"></a>最好最坏平均情况</h4><p>为了对算法复杂度最好的情况做出估计，需要用Ω来标记。<br><br>如果存在正的常数c和函数g(n),使得对于任何n&gt;&gt;2都有：<br><br>    $T(n) ≥ c*g(n)$<br><br>n足够大时，g(n)给了T(n)一个渐进下界，则：<br><br>    $T(n) = Ω(g(n))$<br><br>这里的Ω叫做”大Ω记号”，是算法最好情况下的执行——对于规模为n的输入，算法的运行时间都不低于$Ω(g(n))$。</p>
+<p>通过大Ω记号，大O记号可以对算法的时间复杂度做出定量的界定，从渐进的趋势来看，$T(n)$介于$Ω(g(n))$和$O(f(n))$之间，若出现$g(n)=f(n)$的情况，则用Θ来表示。<br>若存在正的常数$C_1 &lt; C_2$,和函数h(n),使得对于任意$n&gt;&gt;2$都有：<br><br>    $C_1●h(n) ≤ T(n) ≤ C_2●h(n) $ <br><br>n足够大之后，h(n)给出了T(n)一个确界:<br><br>    $T(n) = Θ(h(n))$ <br></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构与算法/" rel="tag"><i class="fa fa-tag"></i>数据结构与算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/29/柯里化/" rel="next" title="柯里化">
+                <i class="fa fa-chevron-left"></i> 柯里化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/20/web-component/" rel="prev" title="Web Component">
+                Web Component <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/homo.jpg"
+                alt="homobulla" />
+            
+              <p class="site-author-name" itemprop="name" style="color:#5290f5;">homobulla</p>
+              <p class="site-description motion-element" itemprop="description">我与我周旋久，宁做我。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/homobulla" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据结构与算法（一）"><span class="nav-number">1.</span> <span class="nav-text">数据结构与算法（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法应具备几个要素："><span class="nav-number">1.1.</span> <span class="nav-text">算法应具备几个要素：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#算法效率"><span class="nav-number">1.2.</span> <span class="nav-text">算法效率</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复杂度度量"><span class="nav-number">1.3.</span> <span class="nav-text">复杂度度量</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#时间复杂度"><span class="nav-number">1.3.1.</span> <span class="nav-text">时间复杂度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#渐进复杂度"><span class="nav-number">1.3.2.</span> <span class="nav-text">渐进复杂度</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#大O记号"><span class="nav-number">1.4.</span> <span class="nav-text">大O记号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#环境差异、基本操作"><span class="nav-number">1.5.</span> <span class="nav-text">环境差异、基本操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最好最坏平均情况"><span class="nav-number">1.6.</span> <span class="nav-text">最好最坏平均情况</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+<div class="copyright">
+<span><a href="http://www.beian.miit.gov.cn">京ICP备19045349号-1<a/></span>
+&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">homobulla</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">19.4k</span>
+   
+  
+</div>
+
+
+        
+<div class="busuanzi-count">
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
