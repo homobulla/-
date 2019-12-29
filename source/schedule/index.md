@@ -28,6 +28,10 @@ comments: false
 个人技术模型完成
 {% endnote%}
 
+{% note%}
+**`2019年12月29日16:57`**
+2019过去了
+{% endnote%}
 
 
 
